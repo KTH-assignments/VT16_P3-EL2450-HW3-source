@@ -1,0 +1,3 @@
+control_state = ROTATE;
+u_psi=0;
+u_omega=0;

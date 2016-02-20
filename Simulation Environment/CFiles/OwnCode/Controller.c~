@@ -1,0 +1,58 @@
+switch (control_state) {
+          /*=============*/
+          case ROTATE:
+               Serial.print("OWN:ROTATE\n");
+               thetaR = atan2(yg-y0,xg-x0)*180/PI; //[-180, 180]
+               if (abs(thetaR-theta)>ang_bound){
+                  u_psi = K_rot_psi*(thetaR-theta);
+                  dist0 = cos(theta*PI/180)*(x0-x)+sin(theta*PI/180)*(y0-y);
+                  u_omega = K_rot_omega*dist0;
+                  Serial.print(":!dist0=");
+                  Serial.print(dist0, DEC);
+                  Serial.print(" u_omega=");
+                  Serial.print(u_omega, DEC);
+                  Serial.print(" u_psi=");
+                  Serial.print(u_psi, DEC);
+                  Serial.print(";\n");
+            }
+               else {
+                  control_state = LINE_FOLLOW;
+                  u_psi = 0;
+                  u_omega = 0;
+                  }
+                break;
+          /*=============*/
+          case LINE_FOLLOW:
+               Serial.print("OWN:LINE_FOLLOW\n");
+               thetaR = atan2(yg-y0,xg-x0);
+               distg = cos(thetaR)*(xg-x)+sin(thetaR)*(yg-y);
+               if (abs(distg)>dist_bound) {
+                  u_omega = K_line_omega*distg;
+                  distp = sin(thetaR)*(x+p_dist*cos(theta*PI/180)-x0)-cos(thetaR)*(y+p_dist*sin(theta*PI/180)-y0);
+                  u_psi = K_line_psi*distp;
+                  Serial.print(":!distg=");
+                  Serial.print(distg, DEC);
+                  Serial.print(" u_omega=");
+                  Serial.print(u_omega, DEC);
+                  Serial.print(":!distp=");
+                  Serial.print(distp, DEC);
+                  Serial.print(" u_psi=");
+                  Serial.print(u_psi, DEC);
+                  Serial.print(";\n");
+                  }
+               else {
+                  control_state = STOP;
+                  u_psi = 0;
+                  u_omega = 0;
+               }
+               break;
+            /*=============*/
+            case STOP:
+               Serial.print("OWN:STOP\n");
+               u_psi = 0;
+               u_omega = 0;
+               break;
+          /*=============*/
+        }
+        left = (int)(u_omega-u_psi*0.5);
+        right = (int)(u_omega+u_psi*0.5);

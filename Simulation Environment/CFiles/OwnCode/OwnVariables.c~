@@ -1,0 +1,28 @@
+double Ts = 1.0; // seconds
+double R = 0.1001405119340;
+double L = 0.2526432228446*2;
+
+enum CONTROL_STATE {
+    ROTATE,
+    LINE_FOLLOW,
+    STOP,
+}; // controller state machine
+enum CONTROL_STATE control_state = ROTATE;
+
+
+double u_omega = 0.0;
+double u_psi = 0.0;
+/* for rotate1 */
+double thetaR = 0.0; // degree
+double dist0 = 0.0; // cm
+double ang_bound = 10.0; // degree
+double K_rot_psi = L/(Ts*R);
+double K_rot_omega = 1/(Ts*R);
+/* for line follow */
+double p_dist = 60.0; // cm
+double p_gain = p_dist*PI/180; //cm/deg
+double distp = 0.0; //cm
+double distg = 0.0; //cm
+double dist_bound = 20.0; //cm
+double K_line_psi = 1L/(p_gain*Ts*R);
+double K_line_omega = 1/(Ts*R);
