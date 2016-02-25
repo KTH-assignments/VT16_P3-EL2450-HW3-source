@@ -43,8 +43,8 @@ switch (control_strategy)
     u_omega = t_K_omega * (cos(theta_R) * (xg-x) + sin(theta_R) * (yg-y));
 
     // Task 13
-    /*left = u_omega;*/
-    /*right = u_omega;*/
+    left = u_omega;
+    right = u_omega;
 
     u_psi = t_K_psi *
       (sin(theta_R) * (x + t_p * cos(theta) - x0)
@@ -56,5 +56,5 @@ switch (control_strategy)
     break;
 }
 
-left = 0.5 * (2 * u_omega - u_psi);
-right = 0.5 * (2 * u_omega + u_psi);
+//left = 0.5 * (2 * u_omega - u_psi);
+//right = 0.5 * (2 * u_omega + u_psi);
