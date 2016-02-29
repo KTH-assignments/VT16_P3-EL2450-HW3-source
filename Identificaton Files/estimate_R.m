@@ -1,5 +1,3 @@
-load('f.mat');
-
 f_t = f_file(:,1);
 f_x = f_file(:,2);
 f_y = f_file(:,3);
