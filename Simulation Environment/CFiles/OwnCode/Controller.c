@@ -14,6 +14,8 @@ switch ( control_strategy )
     }
     else
     {
+      u_psi = 0;
+      u_omega = 0;
       control_strategy = TRANSLATION_CONTROL;
     }
     break;
@@ -32,6 +34,8 @@ switch ( control_strategy )
     }
     else
     {
+      u_psi = 0;
+      u_omega = 0;
       control_strategy = STOP_CONTROL;
     }
     break;
